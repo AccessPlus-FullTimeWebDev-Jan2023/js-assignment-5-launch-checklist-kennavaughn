@@ -90,8 +90,28 @@ listedPlanetsResponse
     console.log(listedPlanets);
     // Call the appropriate helper functions to pick a planet from the list of planets and add that information to your destination
     let planet = pickPlanet(listedPlanets);
-    addDestinationInfo(planet);
-  });
+    // addDestinationInfo(planet)
+    addDestinationInfo(
+      document.getElementById("missionTarget"),
+      "Mars".name,
+     "6779 km".diameter,
+      "Sol".star,
+     "225 million km from Earth".distance,
+      "2".moons,
+      "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg".imageURL
+
+    );
+    {
+    //   myFetch{
+    //     "name": "Mars",
+    //     "diameter": "6779 km",
+    //     "star": "Sol",
+    //     "distance": "225 million km from Earth",
+    //     "image": "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg",
+    //     "moons": 2
+    // }
+   
+  };
 
 
 // async function myFetch() {
