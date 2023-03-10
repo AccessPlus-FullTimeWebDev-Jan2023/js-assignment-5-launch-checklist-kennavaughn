@@ -1,5 +1,7 @@
 // Write your JavaScript code here!
 
+const { validateInput } = require("./scriptHelper");
+
 window.addEventListener("load", function() {
 
    let listedPlanets;
@@ -12,7 +14,27 @@ window.addEventListener("load", function() {
        console.log(listedPlanets);
        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
    })
-   function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
+
+//    function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+//     const validationResults = {
+//         pilot: validateInput(pilot),
+//         copilot: validateInput(copilot),
+//         fuelLevel: validateInput(fuelLevel),
+//         cargoLevel: validateInput(cargoLevel)
+//     };
+//     if (
+//         validationResults.pilot === 'Empty' ||
+//         validationResults.copilot === 'Empty' ||
+//         validationResults.fuelLevel === 'Empty' ||
+//         validationResults.cargoLevel === 'Empty' ||
+//     ) {
+//         document.querySelector('#launch-status').classList.remove('ready');
+//         document.querySelector('#launch-status').classList.add('not-ready');
+//         document.querySelector('#shuttle-status').innerHTML = ('Awaiting');
+//     }
+// }
+
+function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
     this.event.preventDefault(); 
       let pilotStatus = 'Pilot ${pilot} is ready for launch';
       let copilotStatus = 'Co-pilot ${copilot) is ready for launch';
