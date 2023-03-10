@@ -93,8 +93,24 @@ listedPlanetsResponse
     addDestinationInfo(planet);
   });
 
-function pickPlanet(planets) {
-}
+
+// async function myFetch() {
+//     let planetsReturned;
+
+//     planetsReturned = await fetch().then( function(response) {
+//         });
+
+//     return planetsReturned;
+// }
+
+// function pickPlanet(planets) {
+//     "name": "Mars",
+//         "diameter": "6779 km",
+//         "star": "Sol",
+//         "distance": "225 million km from Earth",
+//         "image": "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg",
+//         "moons": 2
+// }
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
