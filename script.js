@@ -16,7 +16,7 @@ window.addEventListener("load", function() {
        addDestinationInfo(document, selectedPlanet.name, selectedPlanet.diameter, selectedPlanet.star, selectedPlanet.distance, selectedPlanet.moons, selectedPlanet.image);
    })
    let list = document.getElementById("faultyItems");
-   list.style.visibility = "visible";
+   list.style.visibility = "hidden";
         
 
     let form = document.querySelector("form");
