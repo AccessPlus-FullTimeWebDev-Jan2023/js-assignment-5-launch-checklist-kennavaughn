@@ -39,7 +39,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     else if (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number" || validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number"){
     alert("Enter valid information for each field");
    } else {
-list.style.visiblity = "visible";
+list.style.visibility = "visible";
 let pilotStatus = document.getElementById("pilotStatus")
 let copilotStatus = document.getElementById("copilotStatus")
 pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
