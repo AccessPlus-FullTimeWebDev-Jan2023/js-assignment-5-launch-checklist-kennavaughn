@@ -2,135 +2,98 @@
 require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-   // Here is the HTML formatting for our mission target div.
-   /*
+    let div = document.getElementById("missionTarget");
+    div.innerHTML = `
                 <h2>Mission Destination</h2>
                 <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
+                    <li>Name: ${name} </li>
+                    <li>Diameter: ${diameter} </li>
                     <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
+                    <li>Distance from Earth: ${distance} </li>
+                    <li>Number of Moons: ${moons} </li>
                 </ol>
-                <img src="">
-   */
+                <img src="${imageUrl}">`;
+   
 }
 
 function validateInput(testInput) {
-    if(inputValue === ''){
-        return 'Empty';
-    } else if (isNaN(value)){
-        return 'Not a Number';
-    } else {
-        return 'Is a Number';
-    }
-   
+    let numberInput = Number(testInput)
+if (testInput === ""){
+    return "Empty";
+} 
+
+ else if (isNaN(numberInput)){
+    return "Not a Number";
+}
+  else if (isNaN(numberInput) === false){
+    return "Is a Number";
+}
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    const validationResults = {
-        pilot: validateInput(pilot),
-        copilot: validateInput(copilot),
-        fuelLevel: validateInput(fuelLevel),
-        cargoLevel: validateInput(cargoLevel)
-    };
-    if (
-        validationResults.pilot === 'Empty' ||
-        validationResults.copilot === 'Empty' ||
-        validationResults.fuelLevel === 'Empty' ||
-        validationResults.cargoLevel === 'Empty' ||
-    ){
-        document.querySelector('#launch-status').classList.remove('ready');
-        document.querySelector('#launch-status').classList.add('not-ready');
-        document.querySelector('#shuttle-status').innerHTML = ('Awaiting');
-    }
+
+
+   if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty"){
+    alert("All fields are required");
+   } 
+    else if (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number" || validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number"){
+    alert("Enter valid information for each field");
+   } else {
+list.style.visiblity = "visible";
+let pilotStatus = document.getElementById("pilotStatus")
+let copilotStatus = document.getElementById("copilotStatus")
+pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
+copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
+let launchStatus = document.getElementById("launchStatus");
+let fuel = document.getElementById("fuelStatus");
+let cargo = document.getElementById("cargoStatus")
+
+console.log(fuelLevel)
+console.log(cargoLevel)
+if (fuelLevel < 10000 && cargoLevel <= 10000){
+    fuel.innerHTML = "Fuel level too low for launch";
+    cargo.innerHTML = "Cargo mass low enough for launch"
+    launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+    launchStatus.style.color = "rgb(199, 37, 78)"
+
+} else if (fuelLevel >= 10000 && cargoLevel > 10000) {
+    fuel.innerHTML = "Fuel level high enough for launch"
+    cargo.innerHTML = "Cargo mass too heavy for launch";
+    launchStatus.innerHTML = "Shuttle Not Ready for Launch"
+    launchStatus.style.color = "rgb(199, 37, 78)"
+
+} else if (fuelLevel < 10000 && cargoLevel > 10000) {
+    console.log("fuel < 10000 & cargoLevel > 10000")
+    fuel.innerHTML = "Fuel level too low for launch"
+    cargo.innerHTML = "Cargo mass too heavy for launch"
+    launchStatus.innerHTML = "Shuttle Not Ready for Launch"
+    launchStatus.style.color = "rgb(199, 37, 78)"
+} else {
+    fuel.innerHTML = "Fuel level high enough for launch"
+    cargo.innerHTML = "Cargo mass low enough for launch"
+    launchStatus.innerHTML = "Shuttle is Ready for Launch";
+    launchStatus.style.color = "rgb(65, 159, 106)";
+
+}
+   }
 }
 
-// function to fetch planetary JSON
 async function myFetch() {
-    const url = "https://handlers.education.launchcode.org/static/planets.json";
-    try {
-      return await response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  // function to pick a random planet from a list
-  function pickPlanet(planets) {
-    const index = Math.floor(Math.random() * planets.length);
-    return planets[index];
-  }
-  
-  // function to update mission target div with planet data
-  function addDestinationInfo(document, planet) {
-    const missionTarget = document.getElementById("missionTarget");
-    missionTarget.innerHTML = `
-      <h2>Mission Destination</h2>
-      <ol>
-        <li>Name: ${planet.name}</li>
-        <li>Diameter: ${planet.diameter}</li>
-        <li>Star: ${planet.star}</li>
-        <li>Distance from Earth: ${planet.distance}</li>
-        <li>Number of Moons: ${planet.moons}</li>
-      </ol>
-      <img src="${planet.image}">
-    `;
-  }
-  let listedPlanets;
-// Set listedPlanetsResponse equal to the value returned by calling myFetch()
-let listedPlanetsResponse = myFetch();
+    let planetsReturned;
 
-listedPlanetsResponse
-  .then(function (result) {
-    listedPlanets = result;
-    console.log(listedPlanets);
-  })
-  .then(function () {
-    console.log(listedPlanets);
-    // Call the appropriate helper functions to pick a planet from the list of planets and add that information to your destination
-    let planet = pickPlanet(listedPlanets);
-    // addDestinationInfo(planet)
-    addDestinationInfo(
-      document.getElementById("missionTarget"),
-      "Mars".name,
-     "6779 km".diameter,
-      "Sol".star,
-     "225 million km from Earth".distance,
-      "2".moons,
-      "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg".imageURL
-
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
+    //    
+        return response.json();
+      }      
     );
-    {
-    //   myFetch{
-    //     "name": "Mars",
-    //     "diameter": "6779 km",
-    //     "star": "Sol",
-    //     "distance": "225 million km from Earth",
-    //     "image": "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg",
-    //     "moons": 2
-    // }
-   
-  };
 
+    return planetsReturned;
+}
 
-// async function myFetch() {
-//     let planetsReturned;
-
-//     planetsReturned = await fetch().then( function(response) {
-//         });
-
-//     return planetsReturned;
-// }
-
-// function pickPlanet(planets) {
-//     "name": "Mars",
-//         "diameter": "6779 km",
-//         "star": "Sol",
-//         "distance": "225 million km from Earth",
-//         "image": "https://mars.nasa.gov/system/resources/detail_files/7808_global-color-views-mars-PIA00407-full2.jpg",
-//         "moons": 2
-// }
+function pickPlanet(planets) {
+    let index = Math.floor(Math.random()*planets.length)
+    return planets[index];
+}
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;

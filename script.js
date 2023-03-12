@@ -1,64 +1,50 @@
-// Write your JavaScript code here!
+//import { addDestinationInfo, formSubmission, myFetch } from "./scriptHelper";
 
-const { validateInput } = require("./scriptHelper");
 
 window.addEventListener("load", function() {
 
-   let listedPlanets;
-   // Set listedPlanetsResponse equal to the value returned by calling myFetch()
-   let listedPlanetsResponse;
+    let listedPlanets;
+//    Set listedPlanetsResponse equal to the value returned by calling myFetch()
+ 
+    let listedPlanetsResponse = myFetch();
    listedPlanetsResponse.then(function (result) {
        listedPlanets = result;
        console.log(listedPlanets);
    }).then(function () {
        console.log(listedPlanets);
-       // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
+       let selectedPlanet = pickPlanet(listedPlanets);
+       addDestinationInfo(document, selectedPlanet.name, selectedPlanet.diameter, selectedPlanet.star, selectedPlanet.distance, selectedPlanet.moons, selectedPlanet.image);
    })
+   let list = document.getElementById("faultyItems");
+   list.style.visibility = "visible";
+        
 
-//    function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-//     const validationResults = {
-//         pilot: validateInput(pilot),
-//         copilot: validateInput(copilot),
-//         fuelLevel: validateInput(fuelLevel),
-//         cargoLevel: validateInput(cargoLevel)
-//     };
-//     if (
-//         validationResults.pilot === 'Empty' ||
-//         validationResults.copilot === 'Empty' ||
-//         validationResults.fuelLevel === 'Empty' ||
-//         validationResults.cargoLevel === 'Empty' ||
-//     ) {
-//         document.querySelector('#launch-status').classList.remove('ready');
-//         document.querySelector('#launch-status').classList.add('not-ready');
-//         document.querySelector('#shuttle-status').innerHTML = ('Awaiting');
-//     }
-// }
-
-function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
-    this.event.preventDefault(); 
-      let pilotStatus = 'Pilot ${pilot} is ready for launch';
-      let copilotStatus = 'Co-pilot ${copilot) is ready for launch';
-    let fuelStatus =  validateInput(fuelLevel);
-    let cargoLevel = validateInput(cargoLevel);
-    
-    };
-    if (fuelStatus === "Is a Number" && fuelLevel < 10000) {
-        document.getElementById("faultyItems").style.visibility = "visible";
-        document.getElementById("pilotStatus").innerHTML = pilotStatus;
-        document.getElementById("copilotStatus").innerHTML = copilotStatus;
-        document.getElementById("fuelStatus").innerHTML = "Fuel level too low for launch";
-        document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
-        document.getElementById("launchStatus").style.color = "red";
-    } else  if (cargoStatus === "Is a Number" && cargoLevel > 10000) {
-        document.getElementById("faultyItems").style.visibility = "visible";
-        document.getElementById("pilotStatus").innerHTML = pilotStatus;
-        document.getElementById("copilotStatus").innerHTML = copilotStatus;
-        document.getElementById("cargoStatus").innerHTML = "Cargo mass too high for launch";
-        document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
-        document.getElementById("launchStatus").style.color = "green";
-
-    } else{
-        this.alert("Please enter valid information for all fields");
+    let form = document.querySelector("form");
+    form.addEventListener("submit", function(event){
+        event.preventDefault();
+    let pilotInput = document.querySelector("input[name=pilotName]");
+    let pilot = pilotInput.value;
+        let copilotInput = document.querySelector("input[name=copilotName]");
+        let copilot = copilotInput.value
+        let fuelInput = document.querySelector("input[name=fuelLevel]");
+        let fuelLevel = Number(fuelInput.value)
+        let cargoInput = document.querySelector("input[name=cargoMass]")
+        let cargoLevel = Number(cargoInput.value)
+      
        
-}
-});
+         formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel)
+    
+
+       })
+    
+})
+
+      //  if (pilotInput.value === "" || copilotInput.value === ""|| fuelLevel ==="" || cargoLevel === ""){
+       //     alert("All fields are required");
+        //     event.preventDefault();
+       
+        
+        //}
+   
+//        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
+//    })
